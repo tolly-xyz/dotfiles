@@ -1,3 +1,6 @@
 [submodule ".config/nixos"]
 	path = .config/nixos
 	url = git@github.com:orrefailaT/nixos.git
+[submodule ".config/nvim"]
+	path = .config/nvim
+	url = git@github.com:orrefailaT/kickstart.nvim.git
