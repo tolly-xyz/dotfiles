@@ -1,0 +1,13 @@
+[user]
+	email = "40471358+orrefailaT@users.noreply.github.com"
+	name = "tolly"
+
+[credential]
+	helper = "libsecret"
+
+[init]
+	defaultBranch = "main"
+
+[push]
+	autoSetupRemote = true
+
