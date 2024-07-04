@@ -1,0 +1,3 @@
+[submodule ".config/nixos"]
+	path = .config/nixos
+	url = git@github.com:orrefailaT/nixos.git
