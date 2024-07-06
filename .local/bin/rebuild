@@ -21,16 +21,21 @@ git diff -U0 '*.nix'
 echo "NixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-sudo nixos-rebuild switch --flake ~/.config/nixos#default &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
+# shellcheck disable=SC2024
+sudo nixos-rebuild switch --flake ~/.config/nixos#default &>nixos-switch.log || (grep --color error nixos-switch.log && exit 1)
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
 
-# Commit all changes witih the generation metadata
+# Commit changes with the generation metadata
 git commit -am "$current"
 
 # Back to where you were
 popd
 
+# Commit changes in main dotfiles repo
+dotfiles add .
+dotfiles commit -m "nixos-rebuild: $current"
+
 # Notify all OK!
-notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available
+notify-send -e "Success!" --app-name="nixos-rebuild" --icon=software-update-available
