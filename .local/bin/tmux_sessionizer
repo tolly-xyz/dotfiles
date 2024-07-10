@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "active" ]]; then
+    mapfile -t ACTIVE_SESSIONS < <(tmux list-sessions -F '#S #{session_path}')
+    MENU_INPUT=()
+    INDEX=1
+    for SESSION in "${ACTIVE_SESSIONS[@]}"; do
+        SESSION_NAME=$(cut -d ' ' -f 1 <<<"$SESSION")
+        MENU_INPUT+=("$SESSION" "$INDEX" "switch-client -t $SESSION_NAME")
+        ((INDEX++))
+    done
+
+    tmux display-menu -T 'Choose Session' "${MENU_INPUT[@]}"
+    exit
+fi
+
+SEARCH_DIRS=(~/ ~/darkpursuit/chrome-extensions ~/.config)
+
+TARGET_DIR=$(find "${SEARCH_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d | fzf --tmux)
+
+# if [[ $# -eq 1 ]]; then
+#     TARGET_DIR=$1
+# else
+#     TARGET_DIR=$(find "${SEARCH_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d | fzf --tmux)
+# fi
+
+if [[ -z $TARGET_DIR ]]; then
+    exit 0
+fi
+
+TARGET_NAME=$(basename "$TARGET_DIR" | tr . _)
+
+if ! tmux has-session -t="$TARGET_NAME" 2>/dev/null; then
+    tmux new-session -d \
+        -s "$TARGET_NAME" \
+        -c "$TARGET_DIR"
+fi
+
+if [[ -n $TMUX ]]; then
+    tmux switch-client -t "$TARGET_NAME"
+else
+    tmux attach-session -t "$TARGET_NAME"
+fi
