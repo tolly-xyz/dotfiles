@@ -5,8 +5,6 @@
 
 set -e
 
-source /etc/profile
-
 # cd to your config dir
 pushd ~/.config/nixos/
 
@@ -36,8 +34,8 @@ git commit -am "$current"
 popd
 
 # Commit changes in main dotfiles repo
-dotfiles add .
-dotfiles commit -m "nixos-rebuild: $current"
+git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" add .config/nixos
+git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" commit -m "nixos-rebuild: $current"
 
 # Notify all OK!
 notify-send -e "Success!" --app-name="nixos-rebuild" --icon=software-update-available
