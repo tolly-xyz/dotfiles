@@ -5,6 +5,8 @@
 
 set -e
 
+source /etc/profile
+
 # cd to your config dir
 pushd ~/.config/nixos/
 
