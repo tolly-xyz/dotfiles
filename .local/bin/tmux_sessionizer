@@ -14,7 +14,7 @@ if [[ $1 == "active" ]]; then
     exit
 fi
 
-SEARCH_DIRS=(~/projects/ ~/repos/ ~/.config)
+SEARCH_DIRS=(~/projects/ ~/repos/ ~/sandbox ~/.config)
 
 TARGET_DIR=$(find "${SEARCH_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d | fzf --tmux)
 

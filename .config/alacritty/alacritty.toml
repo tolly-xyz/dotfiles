@@ -14,7 +14,7 @@ bindings = [
   { key = "N", mods = "Control | Shift",  action = "CreateNewWindow"},
 ]
 
-[shell]
+[terminal.shell]
 program = "tmux"
 
 [colors]
@@ -61,3 +61,5 @@ color = '#ff9e64'
 [[colors.indexed_colors]]
 index = 17
 color = '#db4b4b'
+
+[terminal]
