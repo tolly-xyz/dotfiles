@@ -26,13 +26,16 @@ alias ls='LC_ALL=C ls --color=auto'
 alias la="LC_ALL=C ls -lhAF --group-directories-first"
 alias ll="LC_ALL=C ls -lhF --group-directories-first"
 
-alias dotfiles="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias dotfiles="git --git-dir=\$HOME/.dotfiles/ --work-tree=\$HOME"
 
 complete -cf sudo
 
-source /usr/share/nvm/init-nvm.sh
+# nvm borks shellcheck
+# source /usr/share/nvm/init-nvm.sh
 
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --bash)"
+
+eval "$(eww shell-completions --shell bash)"
 
 bind -x '"\C-f":"tmux_sessionizer"'
